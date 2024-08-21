@@ -3,18 +3,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('UserRoutes', {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userId: {
+      comment: {
+        type: Sequelize.STRING,
+      },
+      rating: {
         type: Sequelize.INTEGER,
       },
-      routeId: {
+      route_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Routes',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('UserRoutes');
+    await queryInterface.dropTable('Reviews');
   },
 };

@@ -12,6 +12,11 @@ module.exports = {
       },
       routeCreator: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'CASCADE',
       },
       routeLength: {
         type: Sequelize.FLOAT,
@@ -22,12 +27,7 @@ module.exports = {
       routeLocation: {
         type: Sequelize.STRING,
       },
-      routeLike: {
-        type: Sequelize.INTEGER,
-      },
-      routeComment: {
-        type: Sequelize.STRING,
-      },
+
       routeMap: {
         type: Sequelize.STRING,
       },

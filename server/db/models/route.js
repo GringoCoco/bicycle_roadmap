@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Route extends Model {
     /**
@@ -10,20 +9,31 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+       // Маршрут принадлежит одному пользователю
+       this.belongsTo(models.User, {
+        foreignKey: 'routeCreator',
+        as: 'creator'
+      });
+
+      // Маршрут может иметь много отзывов
+      this.hasMany(models.Review, {
+        foreignKey: 'route_id',
+        as: 'reviews'
+      });
     }
   }
-  Route.init({
-    routeCreator: DataTypes.INTEGER,
-    routeLength: DataTypes.FLOAT,
-    routeName: DataTypes.STRING,
-    routeLocation: DataTypes.STRING,
-    routeLike: DataTypes.INTEGER,
-    routeComment: DataTypes.STRING,
-    routeMap: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Route',
-  });
+  Route.init(
+    {
+      routeCreator: DataTypes.INTEGER,
+      routeLength: DataTypes.FLOAT,
+      routeName: DataTypes.STRING,
+      routeLocation: DataTypes.STRING,
+      routeMap: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Route',
+    },
+  );
   return Route;
 };
