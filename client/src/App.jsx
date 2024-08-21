@@ -1,59 +1,54 @@
-import { useState } from 'react';
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Layout from './components/Layout';
-import MainPage from './components/pages/MainPage';
-import ProtectedRouter from './components/hocs/ProtectedRouter';
-import UserPages from './components/pages/UserPages';
-import SignUpPage from './components/pages/SignUpPage';
-import LoginPage from './components/pages/LoginPage';
-
+import { useEffect, useState } from "react";
+import "./App.css";
+import axiosInstance, { setAccessToken } from "./api/axiosInstance";
 
 function App() {
-  const [count, setCount] = useState(0)
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout/>,
-      children: [
-        {
-          path: "/",
-          element: <MainPage />,
-        },
-        {
-          path: "/user",
-          element: (<ProtectedRouter
-            isAllowed={user.status === "logged"}
-            redirecTo={"/"}
-          >
-            <UserPages  />
-          </ProtectedRouter>
-          ),
-        },
-        {
-          element: (
-            <ProtectedRouter
-              isAllowed={user.status !== "logged"}
-              redirecTo={"/"}
-            />
-          ),
-          children: [
-            {
-              path: "/auth/signup",
-              element: <SignUpPage />,
-            },
-            {
-              path: "/auth/login",
-              element: <LoginPage/>,
-            },
+  const [user, setUser] = useState();
 
-          ],
-        },
-      ],
-    },
-  ]);
+  useEffect(() => {
+    axiosInstance("/tokens/refresh")
+      .then(({ data }) => {
+        setTimeout(() => {
+          setUser({ status: "logged", data: data.user });
+        }, 1000);
+        setAccessToken(data.accessToken);
+      })
+      .catch(() => {
+        setUser({ status: "guest", data: null });
+        setAccessToken("");
+      });
+  }, []);
+  const logoutHandler = () => {
+    axiosInstance
+      .get("/auth/logout")
+      .then(() => setUser({ status: "guest", data: null }));
+  };
 
-  return <RouterProvider router={router}/>;  
-  
+  const signUpHandler = (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    if (!formData.email || !formData.password || !formData.name) {
+      return alert("Missing required fields");
+    }
+    axiosInstance.post("/auth/signup", formData).then(({ data }) => {
+      setUser({ status: "logged", data: data.user });
+      setAccessToken(data.accessToken);
+    });
+  };
+
+  const signInHandler = (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    if (!formData.email || !formData.password) {
+      return alert("Missing required fields");
+    }
+    axiosInstance.post("/auth/signin", formData).then(({ data }) => {
+      setUser({ status: "logged", data: data.user });
+      setAccessToken(data.accessToken);
+    });
+  };
+
+  return <></>;
 }
 
-export default App
+export default App;
