@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
       routeName: DataTypes.STRING,
       routeLocation: DataTypes.STRING,
       routeMap: DataTypes.STRING,
+      routeStartPoint: DataTypes.STRING,
+      routeEndPoint: DataTypes.STRING,
     },
     {
       sequelize,
