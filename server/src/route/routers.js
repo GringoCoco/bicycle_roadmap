@@ -43,10 +43,10 @@ router.post('/createroute', async (req, res) => {
       routeName,
       routeLocation,
     });
-    res.status(201).json(newRoute);
+    return res.status(201).json(newRoute);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
