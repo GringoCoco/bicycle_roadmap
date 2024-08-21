@@ -1,32 +1,47 @@
 const { Router } = require('express');
-const { Routers } = require('../../db/models');
+const { Route } = require('../../db/models');
 
 const router = Router();
 
 // Получение всех маршрутов
 router.get('/', async (req, res) => {
   try {
-    const routeAll = await Routers.findAll();
-    res.json(routeAll);
+    const routeAll = await Route.findAll();
+    return res.json(routeAll);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+//получение одного
+router.get('/:id', async (req, res) => {
+  try {
+    const routeOne = await Route.findOne();
+    return res.json(routeOne);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Bad Connect' });
+  }
+});
+// //добавление карточки по запросу
+// router.post('/createroute', async (req, res) => {
+//   try {
+
+//   } catch (error) {}
+// });
 
 // Добавление нового маршрута
-router.post('/', async (req, res) => {
+router.post('/createroute', async (req, res) => {
   try {
-    const { routeCreator, routeLength, routeName, routeLocation, routeMap } = req.body;
-    if (!routeCreator || !routeLength || !routeName || !routeLocation || !routeMap) {
+    const { routeCreator, routeLength, routeName, routeLocation } = req.body;
+    if (!routeCreator || !routeLength || !routeName || !routeLocation) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-    const newRoute = await Routers.create({
+    const newRoute = await Route.create({
       routeCreator,
       routeLength,
       routeName,
       routeLocation,
-      routeMap,
     });
     res.status(201).json(newRoute);
   } catch (error) {
@@ -40,7 +55,7 @@ router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { routeCreator, routeLength, routeName, routeLocation, routeMap } = req.body;
-    const routeUp = await Routers.findByPk(id);
+    const routeUp = await Route.findByPk(id);
     if (routeUp) {
       await routeUp.update({
         routeCreator,
@@ -63,7 +78,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const routeDestroy = await Routers.findByPk(id);
+    const routeDestroy = await Route.findByPk(id);
     if (routeDestroy) {
       await routeDestroy.destroy();
       res.status(204).send();

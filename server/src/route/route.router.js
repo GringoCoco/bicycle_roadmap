@@ -35,7 +35,7 @@ routRouter
       // создаем файл с помощью fs
       await fs.writeFile(`./public/img/${name}`, outputBuffer);
       // создаем пост в бд
-      const routes = await Route.create({
+      const route = await Route.create({
         routeName: req.body.routeName,
         routeLocation: req.body.routeLocation,
         routeCreator: req.body.routeCreator,
@@ -75,4 +75,4 @@ routRouter.route('/:id').delete(verifyAccessToken, async (req, res) => {
   }
 });
 
-module.exports = routeRouter;
+module.exports = routRouter;
