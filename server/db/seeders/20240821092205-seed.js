@@ -68,6 +68,12 @@ module.exports = {
           user_id: 1,
           route_id: 1,
         },
+        {
+          comment: 'Amazing route',
+          rating: 4,
+          user_id: 1,
+          route_id: 1,
+        },
         // {
         //   comment: 'Nice and easy route, great for a family ride.',
         //   rating: 4,
