@@ -22,7 +22,7 @@ export default function LoginPage({loginHandler}) {
               placeholder="введи пароль"
             />
           </Form.Group>
-          <Button variant="outline-info" type="submit">
+          <Button variant="outline-success" type="submit">
             Отправить
           </Button>
         </Form>

@@ -3,9 +3,13 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
 export default function RouteCard({ route, user }) {
+  // useNavigate()
+  // window.location = url
+  // `/api/img/${route.routeMap}` <- по адресу /api вряд ли картинки
+  // route.routeMap
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={route.routeMap} />
+      <Card.Img onClick={() => window.location = `/api/img/${route.routeMap}`} variant="top" src={route.routeMap} />
       <Card.Body>
         <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
           <span>
