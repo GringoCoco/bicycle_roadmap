@@ -1,9 +1,10 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Link from 'react-bootstrap/Link';
 
 
 
-export default function ProductCard({route}) {
+export default function RouteCard({route, user}) {
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={route.routeMap} />
