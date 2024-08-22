@@ -54,6 +54,6 @@ export default function useUser() {
     user,
     logoutHandler,
     signUpHandler,
-    loginHandler
-  }
+    loginHandler,
+  };
 }
