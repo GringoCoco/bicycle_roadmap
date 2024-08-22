@@ -27,8 +27,13 @@ module.exports = {
       routeLocation: {
         type: Sequelize.STRING,
       },
-
       routeMap: {
+        type: Sequelize.STRING,
+      },
+      routeStartPoint: {
+        type: Sequelize.STRING,
+      },
+      routeEndPoint: {
         type: Sequelize.STRING,
       },
       createdAt: {
