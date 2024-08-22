@@ -7,7 +7,6 @@ import SignUpPage from './components/pages/SignUpPage';
 import LoginPage from './components/pages/LoginPage';
 import OneRoute from './components/pages/OneRoute';
 import useUser from "./hooks/useUser";
-import OneRoute from "./components/pages/OneRoute";
 
 function App() {
   const { user, logoutHandler, signUpHandler, loginHandler } = useUser();
