@@ -20,7 +20,7 @@ export default function Forma() {
         <Form.Label>Карта</Form.Label>
         <Form.Control name="routeMap" type="file" placeholder="Загрузите карту" />
       </Form.Group>
-      <Button variant="outline-info" type="submit">
+      <Button variant="outline-success" type="submit">
         Добавить
       </Button>
     </Form>
