@@ -26,6 +26,7 @@ export default function useUser() {
     });
   };
 
+
   const signUpHandler = (e) => {
     e.preventDefault();
     const { name, password, email } = Object.fromEntries(
@@ -56,6 +57,6 @@ export default function useUser() {
     user,
     logoutHandler,
     signUpHandler,
-    loginHandler
-  }
+    loginHandler,
+  };
 }
