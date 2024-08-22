@@ -1,8 +1,8 @@
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar({ user, logoutHandler }) {
   return (
@@ -13,13 +13,12 @@ export default function NavBar({ user, logoutHandler }) {
         </Navbar.Brand>
         <Nav className="me-auto">
           <NavLink to="/" className="nav-link text-white">
-            Home
+            Главная страница
           </NavLink>
         </Nav>
         <Nav>
           {user.status !== "logged" ? (
             <>
-
               <NavLink to="/auth/login" className="nav-link text-white">
                 Login
               </NavLink>
@@ -30,14 +29,13 @@ export default function NavBar({ user, logoutHandler }) {
           ) : (
             <>
               <NavLink to="/user" className="nav-link text-white">
-                Привет, {user.data.name }
+                Привет, {user.data.name}
               </NavLink>
               <span className="nav-link text-white">|</span>
-              <span className="nav-link">
-                <Button onClick={logoutHandler} variant="outline-dark" size="sm">
-                  Logout
-                </Button>
-              </span>
+
+              <Button onClick={logoutHandler} variant="light" size="sm">
+                Logout
+              </Button>
             </>
           )}
         </Nav>

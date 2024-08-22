@@ -1,12 +1,33 @@
 const { Router } = require('express');
-const { Route, Review, User } = require('../../db/models');
+const { Route, Review } = require('../../db/models');
+const sequelize = require('sequelize');
 
 const router = Router();
 
 // Получение всех маршрутов
 router.get('/', async (req, res) => {
   try {
-    const routeAll = await Route.findAll();
+    const routeAll = await Route.findAll({
+      include: [
+        {
+          model: Review,
+          as: 'reviews',
+          attributes: [], // Не включаем атрибуты отзывов, нужны только для агрегации
+        },
+      ],
+      attributes: {
+        include: [
+          // this adds AVG attribute to others instead of rewriting whole body
+          [sequelize.fn('AVG', sequelize.col('reviews.rating')), 'avgRating'],
+        ],
+      },
+      order: [['avgRating', 'ASC']],
+      group: ['Route.id'],
+    });
+    // console.log(routeAll.json());
+    // console.log(routeAll);
+    
+
     return res.json(routeAll);
   } catch (error) {
     console.error(error);
