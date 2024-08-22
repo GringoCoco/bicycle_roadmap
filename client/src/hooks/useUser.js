@@ -5,16 +5,18 @@ export default function useUser() {
   const [user, setUser] = useState({ status: "fetching" });
 
   useEffect(() => {
-    axiosInstance("/tokens/refresh").then(({ data }) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(data);
-        }, 1000);
-      }).then((data) => {
-        setUser({ status: "logged", data: data.user });
-        setAccessToken(data.accessToken);
-      });
-    });
+    axiosInstance("/tokens/refresh")
+      .then(({ data }) =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(data);
+          }, 1000);
+        }).then((data) => {
+          setUser({ status: "logged", data: data.user });
+          setAccessToken(data.accessToken);
+        })
+      )
+      .catch(() => setUser({ status: "guest" }));
   }, []);
 
   const logoutHandler = () => {
@@ -23,6 +25,7 @@ export default function useUser() {
       setAccessToken("");
     });
   };
+
 
   const signUpHandler = (e) => {
     e.preventDefault();
