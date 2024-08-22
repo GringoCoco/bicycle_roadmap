@@ -1,12 +1,12 @@
 import RouteCard from '../ui/RouteCard'
-import useRoutes from "./hooks/useRoutes";
+import useRoutes from "../../hooks/useRoutes";
 
-export default function MainPage() {
+export default function MainPage({user}) {
   const { routes } = useRoutes();
   return (
     <div>
-      {routes.map((el) => 
-      <RouteCard key={el.id} route={el}/>
+      {routes.map((route) => 
+      <RouteCard key={route.id} route={route} user={user}/>
       )}
     </div>
   )
