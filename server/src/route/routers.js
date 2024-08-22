@@ -89,15 +89,23 @@ router.post('/createroute', async (req, res) => {
   try {
     console.log(req.body);
 
-    const { routeCreator, routeLength, routeName, routeLocation } = req.body;
-    if (!routeCreator || !routeLength || !routeName || !routeLocation) {
+    const { routeCreator, routeName, routeLocation, routeStartPoint, routeEndPoint } =
+      req.body;
+    if (
+      !routeCreator ||
+      !routeName ||
+      !routeLocation ||
+      !routeStartPoint ||
+      !routeEndPoint
+    ) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     const newRoute = await Route.create({
       routeCreator,
-      routeLength,
       routeName,
       routeLocation,
+      routeStartPoint,
+      routeEndPoint,
     });
 
     return res.status(201).json(newRoute);
