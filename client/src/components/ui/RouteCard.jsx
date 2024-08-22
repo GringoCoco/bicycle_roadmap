@@ -7,7 +7,14 @@ export default function RouteCard({ route, user }) {
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={route.routeMap} />
       <Card.Body>
-        <Card.Title>{route.routeName}</Card.Title>
+        <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
+          <span>
+          {route.routeName} 
+          </span>
+          <span>
+          ⭐️{route.routeLength}
+          </span>
+        </Card.Title>
 
         <Card.Text>локация: {route.routeLocation}</Card.Text>
         <Link

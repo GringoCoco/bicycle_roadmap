@@ -70,7 +70,7 @@ export default function Forma() {
           placeholder="Загрузите карту"
         />
       </Form.Group>
-      <Button variant="outline-info" type="submit">
+      <Button variant="outline-success" type="submit">
         Добавить
       </Button>
     </Form>

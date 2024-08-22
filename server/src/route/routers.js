@@ -1,12 +1,32 @@
 const { Router } = require('express');
-const { Route } = require('../../db/models');
+const { Route, Review, User } = require('../../db/models');
+const sequelize = require('sequelize');
 
 const router = Router();
 
 // Получение всех маршрутов
 router.get('/', async (req, res) => {
   try {
-    const routeAll = await Route.findAll();
+    const routeAll = await Route.findAll({
+      include: [
+        {
+          model: Review,
+          as: 'reviews',
+          attributes: [], // Не включаем атрибуты отзывов, нужны только для агрегации
+        },
+      ],
+      attributes: {
+        include: [
+          // this adds AVG attribute to others instead of rewriting whole body
+          [sequelize.fn('AVG', sequelize.col('reviews.rating')), 'avgRating'],
+        ],
+      },
+      order: [['avgRating', 'ASC']],
+      group: ['Route.id'],
+    });
+    // console.log(routeAll.json());
+    // console.log(routeAll);
+
     return res.json(routeAll);
   } catch (error) {
     console.error(error);
@@ -29,6 +49,40 @@ router.get('/:id', async (req, res) => {
 
 //   } catch (error) {}
 // });
+
+// Достать все коммы и рейтинг
+// Получение отзывов для конкретного маршрута
+router.get('/review/route/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  try {
+    const route = await Route.findByPk(id, {
+      include: [
+        {
+          model: Review,
+          as: 'reviews',
+          include: [
+            {
+              model: User,
+              as: 'author',
+              attributes: ['id', 'name'], // Выбираем нужные атрибуты пользователя
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!route) {
+      return res.status(404).json({ error: 'route not found' });
+    }
+
+    return res.json(route.reviews);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'route error' });
+  }
+});
 
 // Добавление нового маршрута
 router.post('/createroute', async (req, res) => {
@@ -61,6 +115,7 @@ router.post('/createroute', async (req, res) => {
   }
 });
 
+// Изменить данные
 router.put('/:id', async (req, res) => {
   await Route.update(req.body, {
     where: { id: req.params.id },

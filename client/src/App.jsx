@@ -1,10 +1,11 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Layout from "./components/Layout";
-import MainPage from "./components/pages/MainPage";
-import ProtectedRouter from "./components/hocs/ProtectedRouter";
-import UserPages from "./components/pages/UserPages";
-import SignUpPage from "./components/pages/SignUpPage";
-import LoginPage from "./components/pages/LoginPage";
+import Layout from './components/Layout';
+import MainPage from './components/pages/MainPage';
+import ProtectedRouter from './components/hocs/ProtectedRouter';
+import UserPages from './components/pages/UserPages';
+import SignUpPage from './components/pages/SignUpPage';
+import LoginPage from './components/pages/LoginPage';
+import OneRoute from './components/pages/OneRoute';
 import useUser from "./hooks/useUser";
 import OneRoute from "./components/pages/OneRoute";
 
@@ -18,7 +19,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <MainPage user={user} />,
+          element: <MainPage user={user}/>,
         },
         {
           path: "/oneroute/:id",

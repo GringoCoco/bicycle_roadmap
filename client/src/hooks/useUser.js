@@ -5,7 +5,8 @@ export default function useUser() {
   const [user, setUser] = useState({ status: "fetching" });
 
   useEffect(() => {
-    axiosInstance("/token/refresh").then(({ data }) => {
+    axiosInstance("/token/refresh")
+    .then(({ data }) => {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(data);
@@ -13,8 +14,9 @@ export default function useUser() {
       }).then((data) => {
         setUser({ status: "logged", data: data.user });
         setAccessToken(data.accessToken);
-      });
-    });
+      });  
+    })
+    .catch(() => setUser({ status: "guest"}));
   }, []);
 
   const logoutHandler = () => {
@@ -23,6 +25,7 @@ export default function useUser() {
       setAccessToken("");
     });
   };
+
 
   const signUpHandler = (e) => {
     e.preventDefault();
