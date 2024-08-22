@@ -1,68 +1,65 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import axiosInstance, { setAccessToken } from "./api/axiosInstance";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainPage from "./components/pages/MainPage";
+
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Layout from './components/Layout';
+import MainPage from './components/pages/MainPage';
+import ProtectedRouter from './components/hocs/ProtectedRouter';
+import UserPages from './components/pages/UserPages';
+import SignUpPage from './components/pages/SignUpPage';
+import LoginPage from './components/pages/LoginPage';
+import useUser from "./hooks/useUser";
+
 
 function App() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    axiosInstance("/tokens/refresh")
-      .then(({ data }) => {
-        setTimeout(() => {
-          setUser({ status: "logged", data: data.user });
-        }, 1000);
-        setAccessToken(data.accessToken);
-      })
-      .catch(() => {
-        setUser({ status: "guest", data: null });
-        setAccessToken("");
-      });
-  }, []);
-  const logoutHandler = () => {
-    axiosInstance
-      .get("/auth/logout")
-      .then(() => setUser({ status: "guest", data: null }));
-  };
-
-  const signUpHandler = (e) => {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target));
-    if (!formData.email || !formData.password || !formData.name) {
-      return alert("Missing required fields");
-    }
-    axiosInstance.post("/auth/signup", formData).then(({ data }) => {
-      setUser({ status: "logged", data: data.user });
-      setAccessToken(data.accessToken);
-    });
-  };
-
-  const signInHandler = (e) => {
-    e.preventDefault();
-    const formData = Object.fromEntries(new FormData(e.target));
-    if (!formData.email || !formData.password) {
-      return alert("Missing required fields");
-    }
-    axiosInstance.post("/auth/signin", formData).then(({ data }) => {
-      setUser({ status: "logged", data: data.user });
-      setAccessToken(data.accessToken);
-    });
-  };
+  const { user, logoutHandler, signUpHandler, loginHandler } = useUser();
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout user={user} logoutHandler={logoutHandler} />,
+      element: <Layout user={user} logoutHandler={logoutHandler}/>,
       children: [
         {
           path: "/",
           element: <MainPage />,
         },
+        // {
+        //   path: "/oneroute/:id",
+        //   element: <OneRoute />,
+        // },
+        {
+          path: "/user",
+          element: (<ProtectedRouter
+            isAllowed={user.status === "logged"}
+            redirecTo={"/"}
+          >
+            <UserPages user={user} />
+          </ProtectedRouter>
+          ),
+        },
+        {
+          element: (
+            <ProtectedRouter
+              isAllowed={user.status !== "logged"}
+              redirecTo={"/"}
+            />
+          ),
+          children: [
+            {
+              path: "/auth/signup",
+              element: <SignUpPage signUpHandler={signUpHandler}/>,
+            },
+            {
+              path: "/auth/login",
+              element: <LoginPage loginHandler={loginHandler}/>,
+            },
+
+          ],
+        },
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+
+  return <RouterProvider router={router}/>;  
+  
 }
 
-export default App;
+export default App
