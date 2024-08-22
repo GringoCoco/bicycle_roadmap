@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Route, Review } = require('../../db/models');
+const { Route, Review, User } = require('../../db/models');
 const sequelize = require('sequelize');
 
 const router = Router();
@@ -26,7 +26,6 @@ router.get('/', async (req, res) => {
     });
     // console.log(routeAll.json());
     // console.log(routeAll);
-    
 
     return res.json(routeAll);
   } catch (error) {
@@ -51,6 +50,40 @@ router.get('/:id', async (req, res) => {
 //   } catch (error) {}
 // });
 
+// Достать все коммы и рейтинг
+// Получение отзывов для конкретного маршрута
+router.get('/review/route/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  try {
+    const route = await Route.findByPk(id, {
+      include: [
+        {
+          model: Review,
+          as: 'reviews',
+          include: [
+            {
+              model: User,
+              as: 'author',
+              attributes: ['id', 'name'], // Выбираем нужные атрибуты пользователя
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!route) {
+      return res.status(404).json({ error: 'route not found' });
+    }
+
+    return res.json(route.reviews);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'route error' });
+  }
+});
+
 // Добавление нового маршрута
 router.post('/createroute', async (req, res) => {
   try {
@@ -74,6 +107,7 @@ router.post('/createroute', async (req, res) => {
   }
 });
 
+// Изменить данные
 router.put('/:id', async (req, res) => {
   await Route.update(req.body, {
     where: { id: req.params.id },
