@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 
 
-export default function ProductCard({route}) {
+export default function ProductCard({route, user}) {
   return (
     <Card style={{ width: '18rem' }}>
       <Card.Img variant="top" src={route.routeMap} />
