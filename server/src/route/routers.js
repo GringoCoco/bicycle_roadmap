@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Route } = require('../../db/models');
+const { Route, Review, User } = require('../../db/models');
 
 const router = Router();
 
@@ -30,11 +30,47 @@ router.get('/:id', async (req, res) => {
 //   } catch (error) {}
 // });
 
+// Достать все коммы и рейтинг
+// Получение отзывов для конкретного маршрута
+router.get('/review/route/:id', async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  try {
+    const route = await Route.findByPk(id, {
+      include: [
+        {
+          model: Review,
+          as: 'reviews',
+          include: [
+            {
+              model: User,
+              as: 'author',
+              attributes: ['id', 'name'], // Выбираем нужные атрибуты пользователя
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!route) {
+      return res.status(404).json({ error: 'route not found' });
+    }
+
+    return res.json(route.reviews);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'route error' });
+  }
+});
+
+
+
 // Добавление нового маршрута
 router.post('/createroute', async (req, res) => {
   try {
     console.log(req.body);
-    
+
     const { routeCreator, routeLength, routeName, routeLocation } = req.body;
     if (!routeCreator || !routeLength || !routeName || !routeLocation) {
       return res.status(400).json({ message: 'All fields are required' });
@@ -45,7 +81,7 @@ router.post('/createroute', async (req, res) => {
       routeName,
       routeLocation,
     });
-    
+
     return res.status(201).json(newRoute);
   } catch (error) {
     console.error(error);
@@ -53,12 +89,13 @@ router.post('/createroute', async (req, res) => {
   }
 });
 
+// Изменить данные
 router.put('/:id', async (req, res) => {
   await Route.update(req.body, {
     where: { id: req.params.id },
   });
   res.sendStatus(200);
-})
+});
 
 // Удаление маршрута
 router.delete('/:id', async (req, res) => {
