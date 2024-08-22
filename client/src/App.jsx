@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axiosInstance, { setAccessToken } from "./api/axiosInstance";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainPage from "./components/pages/MainPage";
 
 function App() {
   const [user, setUser] = useState();
@@ -48,7 +50,19 @@ function App() {
     });
   };
 
-  return <></>;
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout user={user} logoutHandler={logoutHandler} />,
+      children: [
+        {
+          path: "/",
+          element: <MainPage />,
+        },
+      ],
+    },
+  ]);
+  return <RouterProvider router={router} />;
 }
 
 export default App;
