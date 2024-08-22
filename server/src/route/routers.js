@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Route, Review } = require('../../db/models');
+const { Route, Review, User } = require('../../db/models');
 const sequelize = require('sequelize');
 
 const router = Router();
@@ -26,7 +26,6 @@ router.get('/', async (req, res) => {
     });
     // console.log(routeAll.json());
     // console.log(routeAll);
-    
 
     return res.json(routeAll);
   } catch (error) {
@@ -84,8 +83,6 @@ router.get('/review/route/:id', async (req, res) => {
     return res.status(500).json({ error: 'route error' });
   }
 });
-
-
 
 // Добавление нового маршрута
 router.post('/createroute', async (req, res) => {
