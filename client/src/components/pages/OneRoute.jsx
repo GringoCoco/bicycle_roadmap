@@ -1,26 +1,18 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import axiosInstance from '../../api/axiosInstance'
+import React from "react";
+import useRoute from "../../hooks/useRoute";
+import FullCard from "../ui/FullCard";
+import ReviewForm from "../ui/ReviewForm";
+import ReviewAll from "../ui/ReviewAll";
+// import ymaps from "react-yandex-maps";
 
 export default function OneRoute() {
-    const[card, setCard] = useState(null)
-    const {id} = useParams()
-    const navigate = useNavigate()
+  const { route } = useRoute();
 
-    useEffect(() => {
-       axiosInstance(`/cards/${id}`)
-       .then(({data})=>
-        setCard(data));
-       }, [])
-       const deleteHandler = async () => {
-        await axiosInstance.delete(`/cards/${id}`)
-        navigate('/')
-       }
   return (
     <div>
-      
+      <FullCard route={route} />
+      <ReviewForm />
+      <ReviewAll />
     </div>
-  )
+  );
 }

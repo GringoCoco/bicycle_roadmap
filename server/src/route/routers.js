@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Route, Review, User } = require('../../db/models');
 const sequelize = require('sequelize');
+const { verifyAccessToken } = require('../middlewares/verifyTokens');
 
 const router = Router();
 
@@ -85,19 +86,25 @@ router.get('/review/route/:id', async (req, res) => {
 });
 
 // Добавление нового маршрута
-router.post('/createroute', async (req, res) => {
+router.post('/createroute', verifyAccessToken, async (req, res) => {
   try {
-    console.log(req.body);
-
-    const { routeCreator, routeLength, routeName, routeLocation } = req.body;
-    if (!routeCreator || !routeLength || !routeName || !routeLocation) {
+    const { routeName, routeLocation, routeStartPoint, routeEndPoint } = req.body;
+    const routeCreator = res.locals.user.id;
+    if (
+      !routeName ||
+      !routeLocation ||
+      !routeStartPoint ||
+      !routeEndPoint ||
+      !routeCreator
+    ) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     const newRoute = await Route.create({
       routeCreator,
-      routeLength,
       routeName,
       routeLocation,
+      routeStartPoint,
+      routeEndPoint,
     });
 
     return res.status(201).json(newRoute);

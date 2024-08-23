@@ -31,7 +31,7 @@ export default function RouteCard({ route, user }) {
               Изменить
             </Button>
             <Button
-              onClick={deleteHandler}
+              // onClick={deleteHandler}
               variant="success"
               className="mb-2"
             >
