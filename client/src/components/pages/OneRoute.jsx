@@ -7,13 +7,6 @@ import ReviewForm from "../ui/ReviewForm";
 import Reviews from "../ui/Reviews";
 // import ymaps from "react-yandex-maps";
 
-<<<<<<< HEAD
-export default function OneRoute() {
-  const { route } = useRoute();
-  console.log(route);
-  
-
-=======
 export default function OneRoute( {user}) {
   // const { route } = useRoute();
   const [route, setRoute] = useState([]);
@@ -24,7 +17,6 @@ export default function OneRoute( {user}) {
     });
   }, [id]);
   console.log(route);
->>>>>>> dev
   return (
     <div>
       <FullCard user={user} route={route} />
