@@ -1,5 +1,5 @@
 import Carousel from "react-bootstrap/Carousel";
-import ExampleCarouselImage from "components/ExampleCarouselImage";
+
 
 
 
@@ -8,6 +8,9 @@ import ExampleCarouselImage from "components/ExampleCarouselImage";
 
 
 export default function Reviews(reviews) {
+
+
+
     const reviews = [
         {
             id: "1",

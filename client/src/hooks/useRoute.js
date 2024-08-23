@@ -1,5 +1,6 @@
-import { useEffect, useState, useParams } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../components/api/axiosInstance";
+import { useParams } from "react-router-dom";
 
 export default function useRoute() {
   const [route, setRoute] = useState([]);
