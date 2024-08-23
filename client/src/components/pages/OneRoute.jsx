@@ -18,7 +18,7 @@ export default function OneRoute({ user }) {
     });
   }, [id]);
   useEffect(() => {
-    axiosInstance(`review/route/${id}`).then(({ data }) => {
+    axiosInstance(`routers/review/route/${id}`).then(({ data }) => {
       setReviews(data);
     });
   }, [id]);
