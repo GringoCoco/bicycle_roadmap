@@ -1,8 +1,9 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
-  points: [],
-  inc: (coord) => set(() => ({ points: coord })),
+  coords: [],
+  inc: (coord) => set(() => ({ coords: coord })),
+  deleteCoords: () => set(() => ({ coords: [] })),
 }));
 
 export default useStore;
