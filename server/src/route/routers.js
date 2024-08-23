@@ -38,6 +38,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
+<<<<<<< HEAD
+=======
+    const { id } = req.params;
+>>>>>>> dev
     const routeOne = await Route.findByPk(id);
     return res.json(routeOne);
   } catch (error) {
@@ -91,8 +95,12 @@ router.post('/createroute', verifyAccessToken, async (req, res) => {
   console.log(req.body);
   
   try {
+<<<<<<< HEAD
     const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } =
       req.body;
+=======
+    const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } = req.body;
+>>>>>>> dev
     const routeCreator = res.locals.user.id;
     if (
       !routeName ||
@@ -142,6 +150,29 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.post('/reviews/route/:id', verifyAccessToken, async (req, res) => {
+  const { id } = req.params; // id маршрута
+  const { comment, rating } = req.body; // текст отзыва
+  const userId = res.locals.user.id;
+
+  try {
+    if (!comment || !rating) {
+      return res.status(404).json({ error: 'Not comment' });
+    }
+
+    const newReview = await Review.create({
+      comment,
+      rating,
+      route_id: id,
+      user_id: userId,
+    });
+    return res.status(201).json(newReview);
+  } catch (error) {
+    console.error('Ошибка при добавлении отзыва:', error);
+    return res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 
