@@ -27,14 +27,11 @@ module.exports = {
       routeLocation: {
         type: Sequelize.STRING,
       },
-      routeMap: {
-        type: Sequelize.STRING,
-      },
       routeStartPoint: {
-        type: Sequelize.STRING,
+        type: Sequelize.ARRAY(Sequelize.FLOAT),
       },
       routeEndPoint: {
-        type: Sequelize.STRING,
+        type: Sequelize.ARRAY(Sequelize.FLOAT),
       },
       createdAt: {
         allowNull: false,
