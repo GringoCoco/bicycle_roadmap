@@ -12,7 +12,7 @@ export default function RouteCard({ route }) {
     <Card style={{ width: "18rem" }}>
       <Card.Body>
         <Card.Title
-          style={{ display: "flex", justifyContent: "space-between" }}
+          style={{ display: "flex", flexDirection: 'column', justifyContent: "space-between" }}
         >
           <span>{route.routeName}</span>
           <span>⭐️{Math.round(rating * 10) / 10}</span>

@@ -13,15 +13,16 @@
     "@pbe/react-yandex-maps": "^1.2.5",
     "axios": "^1.7.4",
     "bootstrap": "^5.3.3",
+    "framer-motion": "^12.0.0-alpha.0",
+    "install": "^0.13.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
+    "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.26.1",
     "yandex-maps": "^0.0.1",
     "ymaps": "^0.2.1",
-    "zustand": "^4.5.5",
-    "react-loader-spinner": "^6.1.6"
-  
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
