@@ -1,12 +1,14 @@
-import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Maps from "./Maps";
+import CurrentMap from "./Map";
 
 export default function FullCard({ route }) {
+  console.log(route);
+  console.log(route.routeStartPoint, route.routeEndPoint);
+
   return (
     <Card style={{ width: "40rem" }}>
-      <Maps />
+      <CurrentMap bdPoints={[route.routeStartPoint, route.routeEndPoint]} />
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
         <Card.Title>Card Title</Card.Title>

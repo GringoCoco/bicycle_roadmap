@@ -2,10 +2,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-
 export default function RouteCard({ route, user }) {
-  console.log(route);
-
   const rating = route.avgRating;
   return (
     <Card style={{ width: "18rem" }}>

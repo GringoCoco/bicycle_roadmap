@@ -7,6 +7,8 @@ import ReviewAll from "../ui/ReviewAll";
 
 export default function OneRoute() {
   const { route } = useRoute();
+  console.log(route);
+  
 
   return (
     <div>

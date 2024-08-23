@@ -25,9 +25,9 @@ export default function Forma() {
     const dataToSend = {
       routeName: formData.get("routeName"),
       routeLocation: formData.get("routeLocation"),
-      routeLength: routeLength,
       routeStartPoint: routeStartPoint, // Добавляем начальную точку маршрута
-      routeEndPoint: routeEndPoint, // Добавляем конечную точку маршрута
+      routeEndPoint: routeEndPoint,
+      routeLength: routeLength, // Добавляем конечную точку маршрута
     };
     console.log(dataToSend);
 

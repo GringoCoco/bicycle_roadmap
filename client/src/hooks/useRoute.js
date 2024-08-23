@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 export default function useRoute() {
   const [route, setRoute] = useState([]);
   const { id } = useParams();
+  console.log(id);
+    
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +18,8 @@ export default function useRoute() {
     await axiosInstance.delete(`/routers/${route.id}`);
     navigate("/routers");
   };
+  console.log(route);
+  
   return {
     route,
   };
