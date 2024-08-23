@@ -1,6 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
 
-export default function Reviews({reviews}) {
+export default function Reviews({ reviews }) {
   return (
     <Carousel
       style={{ margin: "5", display: "flex", justifyContent: "center" }}
@@ -15,8 +15,8 @@ export default function Reviews({reviews}) {
               borderRadius: "10px",
             }}
           >
-            <h3>{el.author}</h3>
-            <p>{el.text}</p>
+            <h3>{el.author.name}</h3>
+            <p>{el.comment}</p>
           </div>
         </Carousel.Item>
       ))}

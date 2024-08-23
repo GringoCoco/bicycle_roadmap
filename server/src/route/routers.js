@@ -57,8 +57,6 @@ router.get('/:id', async (req, res) => {
 // Получение отзывов для конкретного маршрута
 router.get('/review/route/:id', async (req, res) => {
   const { id } = req.params;
-  console.log(id);
-
   try {
     const route = await Route.findByPk(id, {
       include: [
@@ -90,9 +88,10 @@ router.get('/review/route/:id', async (req, res) => {
 // Добавление нового маршрута
 router.post('/createroute', verifyAccessToken, async (req, res) => {
   console.log(req.body);
-  
+
   try {
-    const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } = req.body;
+    const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } =
+      req.body;
     const routeCreator = res.locals.user.id;
     if (
       !routeName ||
@@ -110,7 +109,7 @@ router.post('/createroute', verifyAccessToken, async (req, res) => {
       routeLocation,
       routeStartPoint,
       routeEndPoint,
-      routeLength
+      routeLength,
     });
 
     return res.status(201).json(newRoute);
