@@ -5,10 +5,11 @@ import axiosInstance from "../api/axiosInstance";
 import FullCard from "../ui/FullCard";
 import ReviewForm from "../ui/ReviewForm";
 import Reviews from "../ui/Reviews";
+import Container from "react-bootstrap/esm/Container";
 // import ymaps from "react-yandex-maps";
 
-export default function OneRoute( {user}) {
-  // const { route } = useRoute();
+export default function OneRoute({ user }) {
+  const [reviews, setReviews] = useState([]);
   const [route, setRoute] = useState([]);
   const { id } = useParams();
   useEffect(() => {
@@ -16,12 +17,19 @@ export default function OneRoute( {user}) {
       setRoute(data);
     });
   }, [id]);
+  useEffect(() => {
+    axiosInstance(`review/route/${id}`).then(({ data }) => {
+      setReviews(data);
+    });
+  }, [id]);
   console.log(route);
   return (
-    <div>
+    <Container
+        style={{ width: "40rem", display: "flex", flexDirection: 'column', justifyContent: "center", gap: 20, marginTop: 40 }}
+      >
       <FullCard user={user} route={route} />
       <ReviewForm />
-      <Reviews />
-    </div>
+      <Reviews reviews={reviews}/>
+    </Container>
   );
 }

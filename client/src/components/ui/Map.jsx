@@ -1,7 +1,7 @@
 import React from "react";
 import { YMaps, Map, Placemark, Polyline } from "@pbe/react-yandex-maps";
 
-const Maps = ({ bdPoints }) => {
+const CurrentMap = ({ bdPoints }) => {
   return (
     <YMaps>
       <Map
@@ -38,4 +38,4 @@ const Maps = ({ bdPoints }) => {
   );
 };
 
-export default Maps;
+export default CurrentMap;
