@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
           [sequelize.fn('AVG', sequelize.col('reviews.rating')), 'avgRating'],
         ],
       },
-      order: [['avgRating', 'ASC']],
+      order: [['avgRating', 'DESC']],
       group: ['Route.id'],
     });
     // console.log(routeAll.json());
