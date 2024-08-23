@@ -8,8 +8,11 @@ import LoginPage from './components/pages/LoginPage';
 import OneRoute from './components/pages/OneRoute';
 import useUser from "./hooks/useUser";
 
+
+
 function App() {
   const { user, logoutHandler, signUpHandler, loginHandler } = useUser();
+
 
   const router = createBrowserRouter([
     {
@@ -18,11 +21,11 @@ function App() {
       children: [
         {
           path: "/",
-          element: <MainPage user={user}/>,
+          element: <MainPage  user={user}/>,
         },
         {
           path: "/oneroute/:id",
-          element: <OneRoute />,
+          element: <OneRoute user={user}/>,
         },
         {
           path: "/user",

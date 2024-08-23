@@ -48,9 +48,14 @@ export default function useUser() {
     if (!formData.email || !formData.password) {
       return alert("Missing required fields");
     }
-    axiosInstance.post("/auth/signin", formData).then(({ data }) => {
+    axiosInstance.post("/auth/signin", formData).then((res) => {
+      const { data } = res;
+    
       setUser({ status: "logged", data: data.user });
       setAccessToken(data.accessToken);
+
+    }).catch(err => {
+      const res = err.response;
     });
   };
   return {

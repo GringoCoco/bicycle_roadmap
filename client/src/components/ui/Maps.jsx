@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { YMaps, Map, Placemark, Polyline } from "@pbe/react-yandex-maps";
-import axiosInstance from "../api/axiosInstance";
-import  useStore  from "../../store/store";
+import useStore from "../../store/store";
 
 const Maps = () => {
   const [points, setPoints] = useState([]);
   const { inc } = useStore();
+  
+  useEffect(() => {
+    inc(points);
+  }, [points, inc]);
 
   const handleMapClick = (event) => {
     const coords = event.get("coords");
     if (points.length < 2) {
-      setPoints([...points, coords]);
-    } else {
-      setPoints([points[1], coords]);
+      setPoints([...points, coords]); // Добавляем точку, если их меньше двух
     }
-    inc(points);
   };
+
+  const handleClear = () => {
+    setPoints([]); // Очищаем точки
+  };
+
   return (
     <YMaps>
       <Map
@@ -39,6 +44,9 @@ const Maps = () => {
           />
         )}
       </Map>
+      <button type="button" onClick={handleClear}>
+        Очистить точки
+      </button>
     </YMaps>
   );
 };
