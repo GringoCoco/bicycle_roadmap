@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Maps from "./Maps";
 import Container from "react-bootstrap/esm/Container";
+import CurrentMap from "./Map";
 
 export default function FullCard({ user, route }) {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ export default function FullCard({ user, route }) {
 
   return (
     <Card style={{ width: "40rem" }}>
-      <Maps />
+      <CurrentMap  bdPoints={[route.routeStartPoint, route.routeEndPoint]} />
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
         <Card.Title>{route.routeName}</Card.Title>

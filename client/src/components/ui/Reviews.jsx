@@ -1,6 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
 
-export default function Reviews(reviews) {
+export default function Reviews({reviews}) {
   return (
     <Carousel
       style={{ margin: "5", display: "flex", justifyContent: "center" }}

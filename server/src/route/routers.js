@@ -36,6 +36,7 @@ router.get('/', async (req, res) => {
 });
 // получение одного
 router.get('/:id', async (req, res) => {
+  const { id } = req.params;
   try {
     const { id } = req.params;
     const routeOne = await Route.findByPk(id);
@@ -88,6 +89,8 @@ router.get('/review/route/:id', async (req, res) => {
 
 // Добавление нового маршрута
 router.post('/createroute', verifyAccessToken, async (req, res) => {
+  console.log(req.body);
+  
   try {
     const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } = req.body;
     const routeCreator = res.locals.user.id;
@@ -96,7 +99,8 @@ router.post('/createroute', verifyAccessToken, async (req, res) => {
       !routeLocation ||
       !routeStartPoint ||
       !routeEndPoint ||
-      !routeCreator
+      !routeCreator ||
+      !routeLength
     ) {
       return res.status(400).json({ message: 'All fields are required' });
     }
