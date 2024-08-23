@@ -2,15 +2,11 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
-<<<<<<< HEAD
-export default function RouteCard({ route, user }) {
-=======
 import axiosInstance from "../api/axiosInstance";
 
 
 export default function RouteCard({ route }) {
 
->>>>>>> dev
   const rating = route.avgRating;
   return (
     <Card style={{ width: "18rem" }}>

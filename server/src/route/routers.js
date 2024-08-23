@@ -38,10 +38,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-<<<<<<< HEAD
-=======
     const { id } = req.params;
->>>>>>> dev
     const routeOne = await Route.findByPk(id);
     return res.json(routeOne);
   } catch (error) {
@@ -95,12 +92,7 @@ router.post('/createroute', verifyAccessToken, async (req, res) => {
   console.log(req.body);
   
   try {
-<<<<<<< HEAD
-    const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } =
-      req.body;
-=======
     const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } = req.body;
->>>>>>> dev
     const routeCreator = res.locals.user.id;
     if (
       !routeName ||
