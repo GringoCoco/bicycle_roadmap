@@ -3,17 +3,19 @@ import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 
 export default function RouteCard({ route, user }) {
+  console.log(user.data.id);
+  console.log(route);
+  
+  
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src={route.routeMap} />
       <Card.Body>
-        <Card.Title style={{display: 'flex', justifyContent: 'space-between'}}>
-          <span>
-          {route.routeName} 
-          </span>
-          <span>
-          ⭐️{route.routeLength}
-          </span>
+        <Card.Title
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <span>{route.routeName}</span>
+          <span>⭐️{route.routeLength}</span>
         </Card.Title>
 
         <Card.Text>локация: {route.routeLocation}</Card.Text>
@@ -24,13 +26,13 @@ export default function RouteCard({ route, user }) {
           подробнее
         </Link>
 
-        {user.status === "logged" && user.data.id === route.user_id && (
+        {user.status === "logged" && user.data.id === route.routeCreator && (
           <div className="d-flex flex-row justify-content-end gap-4">
             <Button variant="outline-info" className="mb-2">
               Изменить
             </Button>
             <Button
-              onClick={deleteHandler}
+              // onClick={deleteHandler}
               variant="outline-info"
               className="mb-2"
             >
