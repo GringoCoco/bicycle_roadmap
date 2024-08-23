@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import axiosInstance from "../api/axiosInstance";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useUser from "../../hooks/useUser";
 
 export default function ReviewForm() {
@@ -11,6 +11,7 @@ export default function ReviewForm() {
   const [rating, setRating] = React.useState();
   const { id } = useParams(); // id маршрута из URL
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,11 +22,13 @@ export default function ReviewForm() {
       return;
     }
     try {
-      await axiosInstance.post(`/routers/reviews/route/${id}`, { comment, rating });
-
+      await axiosInstance.post(`/routers/reviews/route/${id}`, {
+        comment,
+        rating,
+      });
       setComment("");
       setRating();
-      alert("Ваш отзыв и оценка успешно отправлен");
+      navigate("/");
     } catch (error) {
       console.log("Ошибка при отправке отзыва:", error);
       alert("Ошибка при отправке отзыва");
