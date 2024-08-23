@@ -22,7 +22,8 @@ router.get('/', async (req, res) => {
           [sequelize.fn('AVG', sequelize.col('reviews.rating')), 'avgRating'],
         ],
       },
-      order: [['avgRating', 'DESC']],
+      order: [sequelize.literal('AVG("reviews"."rating") DESC NULLS LAST')],
+      // order: [['avgRating', 'DESC']],
       group: ['Route.id'],
     });
     // console.log(routeAll.json());
@@ -141,6 +142,30 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.get('/route/:id/user', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const route = await Route.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'creator',
+          attributes: ['name'],
+        },
+      ],
+    });
+
+    if (!route) {
+      return res.status(404).json({ error: 'route not found' });
+    }
+
+    return res.json(route);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'route error' });
   }
 });
 

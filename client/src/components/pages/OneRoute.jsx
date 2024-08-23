@@ -12,6 +12,8 @@ export default function OneRoute({ user }) {
   const [reviews, setReviews] = useState([]);
   const [route, setRoute] = useState([]);
   const { id } = useParams();
+  console.log(user.status);
+  
   useEffect(() => {
     axiosInstance(`/routers/${id}`).then(({ data }) => {
       setRoute(data);
@@ -25,11 +27,22 @@ export default function OneRoute({ user }) {
   console.log(route);
   return (
     <Container
-        style={{ width: "40rem", display: "flex", flexDirection: 'column', justifyContent: "center", gap: 20, marginTop: 40 }}
-      >
+      style={{
+        width: "40rem",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        gap: 20,
+        marginTop: 40,
+      }}
+    >
       <FullCard user={user} route={route} />
-      <ReviewForm />
-      <Reviews reviews={reviews}/>
+      {user.status === "logged" && user.data.id !== route.routeCreator && (
+        <>
+          <ReviewForm />
+          <Reviews reviews={reviews} />
+        </>
+      )}
     </Container>
   );
 }

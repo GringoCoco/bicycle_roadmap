@@ -30,7 +30,7 @@ export default function SignUpPage({signUpHandler}) {
               placeholder="Придумайте пароль"
             />
           </Form.Group>
-          <Button variant="outline-info" type="submit">
+          <Button variant="success" type="submit">
             Отправить
           </Button>
         </Form>

@@ -1,10 +1,9 @@
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-export default function LoginPage({loginHandler}) {
+export default function LoginPage({ loginHandler }) {
   return (
     <Row>
       <Col md={{ span: 6, offset: 3 }} className="mt-5">
@@ -22,7 +21,7 @@ export default function LoginPage({loginHandler}) {
               placeholder="введи пароль"
             />
           </Form.Group>
-          <Button variant="outline-success" type="submit">
+          <Button variant="success" type="submit">
             Отправить
           </Button>
         </Form>

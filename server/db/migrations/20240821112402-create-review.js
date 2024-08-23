@@ -15,6 +15,7 @@ module.exports = {
       },
       rating: {
         type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       route_id: {
         type: Sequelize.INTEGER,
