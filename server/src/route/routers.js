@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Route, Review, User } = require('../../db/models');
 const sequelize = require('sequelize');
+const { verifyAccessToken } = require('../middlewares/verifyTokens');
 
 const router = Router();
 
@@ -137,6 +138,29 @@ router.delete('/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.post('/reviews/route/:id', verifyAccessToken, async (req, res) => {
+  const { id } = req.params; // id маршрута
+  const { comment, rating } = req.body; // текст отзыва
+  const userId = res.locals.user.id;
+
+  try {
+    if (!comment || !rating) {
+      return res.status(404).json({ error: 'Not comment' });
+    }
+
+    const newReview = await Review.create({
+      comment,
+      rating,
+      route_id: id,
+      user_id: userId,
+    });
+    return res.status(201).json(newReview);
+  } catch (error) {
+    console.error('Ошибка при добавлении отзыва:', error);
+    return res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 

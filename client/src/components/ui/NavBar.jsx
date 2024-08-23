@@ -28,8 +28,9 @@ export default function NavBar({ user, logoutHandler }) {
             </>
           ) : (
             <>
+            
               <NavLink to="/user" className="nav-link text-white">
-                Привет, {user.data.name}
+                Кабинет
               </NavLink>
               <span className="nav-link text-white">|</span>
 
