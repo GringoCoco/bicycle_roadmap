@@ -4,7 +4,7 @@ import axiosInstance from "../api/axiosInstance";
 // import useRoute from "../../hooks/useRoute";
 import FullCard from "../ui/FullCard";
 import ReviewForm from "../ui/ReviewForm";
-import ReviewAll from "../ui/ReviewAll";
+import Reviews from "../ui/Reviews";
 // import ymaps from "react-yandex-maps";
 
 export default function OneRoute( {user}) {
@@ -21,7 +21,7 @@ export default function OneRoute( {user}) {
     <div>
       <FullCard user={user} route={route} />
       <ReviewForm />
-      <ReviewAll />
+      <Reviews />
     </div>
   );
 }

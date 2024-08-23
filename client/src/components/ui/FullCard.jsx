@@ -3,6 +3,7 @@ import axiosInstance from "../api/axiosInstance";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Maps from "./Maps";
+import Container from "react-bootstrap/esm/Container";
 
 export default function FullCard({ user, route }) {
   const navigate = useNavigate();
