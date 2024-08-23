@@ -37,7 +37,8 @@ router.get('/', async (req, res) => {
 // получение одного
 router.get('/:id', async (req, res) => {
   try {
-    const routeOne = await Route.findOne();
+    const { id } = req.params;
+    const routeOne = await Route.findByPk(id);
     return res.json(routeOne);
   } catch (error) {
     console.error(error);
@@ -88,7 +89,7 @@ router.get('/review/route/:id', async (req, res) => {
 // Добавление нового маршрута
 router.post('/createroute', verifyAccessToken, async (req, res) => {
   try {
-    const { routeName, routeLocation, routeStartPoint, routeEndPoint } = req.body;
+    const { routeName, routeLocation, routeStartPoint, routeEndPoint, routeLength } = req.body;
     const routeCreator = res.locals.user.id;
     if (
       !routeName ||
@@ -105,6 +106,7 @@ router.post('/createroute', verifyAccessToken, async (req, res) => {
       routeLocation,
       routeStartPoint,
       routeEndPoint,
+      routeLength
     });
 
     return res.status(201).json(newRoute);

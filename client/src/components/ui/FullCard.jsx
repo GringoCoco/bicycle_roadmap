@@ -1,20 +1,42 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "../api/axiosInstance";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Maps from "./Maps";
 
-export default function FullCard({ route }) {
+export default function FullCard({ user, route }) {
+  const navigate = useNavigate();
+  const deleteHandler = async () => {
+    await axiosInstance.delete(`/routers/${route.id}`);
+    navigate("/");
+  };
+
   return (
     <Card style={{ width: "40rem" }}>
       <Maps />
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>{route.routeName}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+         Длина маршрута: {route.routeLength}
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Card.Text>
+         Локация: {route.routeLocation}
+        </Card.Text>
+        {user.status === "logged" && user.data.id === route.routeCreator && (
+          <div className="d-flex flex-row justify-content-end gap-4">
+            <Button variant="success" className="mb-2">
+              Изменить
+            </Button>
+            <Button
+              onClick={deleteHandler}
+              variant="success"
+              className="mb-2"
+            >
+              Удалить
+            </Button>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

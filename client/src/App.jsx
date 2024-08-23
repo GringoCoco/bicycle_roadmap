@@ -25,7 +25,7 @@ function App() {
         },
         {
           path: "/oneroute/:id",
-          element: <OneRoute />,
+          element: <OneRoute user={user}/>,
         },
         {
           path: "/user",
